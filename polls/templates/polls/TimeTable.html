@@ -118,27 +118,40 @@
                 var endRow = getRowFromTime(endTime);
 
                 var timetableCells = timetable.getElementsByClassName(day);
-                for (var k = 0; k < timetableCells.length; k++) {
-                    if (k + 1 >= startRow && k + 1 < endRow) {
-                        var cell = timetableCells[k];
+                var mergedCells = [];
 
-                        if (checkbox.checked) {
-                            // Add the course name and session type
-                            if (cell.textContent !== '') {
-                                cell.textContent += '';
-                            } else {
-                                cell.textContent = courseName;
-                            }
-                            cell.classList.add(sessionType.toLowerCase());
-                        } else {
-                            // Remove the course name and session type
-                            cell.textContent = cell.textContent.replace(courseName, '').trim();
-                            cell.classList.remove(sessionType.toLowerCase());
-                        }
+                for (var k = 0; k < timetableCells.length; k++) {
+                var cell = timetableCells[k];
+
+                if (k + 1 >= startRow && k + 1 < endRow) {
+                    mergedCells.push(cell);
+                }
+                }
+
+                if (checkbox.checked) {
+                // Merge cells
+                if (mergedCells.length > 0) {
+                    mergedCells[0].setAttribute('rowspan', mergedCells.length);
+                    mergedCells[0].textContent = courseName;
+                    mergedCells[0].classList.add(sessionType.toLowerCase());
+
+                    // Remove extra merged cells
+                    for (var m = 1; m < mergedCells.length; m++) {
+                    mergedCells[m].style.display = 'none';
                     }
                 }
+                } else {
+                // Unmerge cells
+                for (var n = 0; n < mergedCells.length; n++) {
+                    mergedCells[n].removeAttribute('rowspan');
+                    mergedCells[n].textContent = '';
+                    mergedCells[n].classList.remove(sessionType.toLowerCase());
+                    mergedCells[n].style.display = 'table-cell';
+                }
+                }
             }
-        }
+            }
+
 
 
         function getRowFromTime(time) {
@@ -156,7 +169,7 @@
 
     <div class="checkbox-container">
         <label class="checkbox-label">
-            <input type="checkbox" value="Math" onchange="updateTimetable(this, 3, 'monday', '8:00 AM', '10:00 AM', 'Lecture', 'monday', '10:00 AM', '12:00 PM', 'Exercise', 'friday', '8:00 AM', '10:00 AM', 'Project')"> Math
+            <input type="checkbox" value="Math" onchange="updateTimetable(this, 3, 'monday', '8:00 AM', '11:00 AM', 'Lecture', 'monday', '11:00 AM', '12:00 PM', 'Exercise', 'friday', '8:00 AM', '10:00 AM', 'Project')"> Math
         </label>
         <label class="checkbox-label">
             <input type="checkbox" value="English" onchange="updateTimetable(this, 2, 'wednesday', '9:00 AM', '11:00 AM', 'Written-Exam', 'thursday', '10:00 AM', '12:00 PM', 'Exercise')"> English
