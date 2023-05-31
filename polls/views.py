@@ -80,6 +80,9 @@ def masters(request):
 def results(request):
     return render(request, 'polls/results.html')
 
+def timetable(request):
+    return render(request, 'polls/timetable.html')
+
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']

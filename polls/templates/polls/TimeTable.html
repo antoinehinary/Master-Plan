@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timetable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .checkbox-label {
+            margin-right: 20px;
+        }
+    </style>
+    <script>
+        var timeValues = [
+            '8:00 AM',
+            '9:00 AM',
+            '10:00 AM',
+            '11:00 AM',
+            '12:00 PM',
+            '1:00 PM',
+            '2:00 PM',
+            '3:00 PM',
+            '4:00 PM',
+            '5:00 PM',
+            '6:00 PM',
+            '7:00 PM'
+        ];
+
+        function updateTimetable(checkbox, sessionsPerWeek, ...sessionDetails) {
+            var timetable = document.getElementsByClassName('timetable')[0];
+            var courseName = checkbox.value;
+
+            // Clear all existing sessions for the course
+            var cells = timetable.getElementsByClassName(courseName);
+            for (var i = 0; i < cells.length; i++) {
+                cells[i].textContent = '';
+            }
+
+            for (var j = 0; j < sessionsPerWeek; j++) {
+                var day = sessionDetails[j * 4];
+                var startTime = sessionDetails[j * 4 + 1];
+                var endTime = sessionDetails[j * 4 + 2];
+                var sessionType = sessionDetails[j * 4 + 3];
+                var startRow = getRowFromTime(startTime);
+                var endRow = getRowFromTime(endTime);
+
+                var timetableCells = timetable.getElementsByClassName(day);
+                for (var k = 0; k < timetableCells.length; k++) {
+                    if (k + 1 >= startRow && k + 1 < endRow) {
+                        var cell = timetableCells[k];
+
+                        if (checkbox.checked) {
+                            // Add the course name and session type
+                            if (cell.textContent !== '') {
+                                cell.textContent += ' / ' + sessionType;
+                            } else {
+                                cell.textContent = courseName + ' / ' + sessionType;
+                            }
+                        } else {
+                            // Remove the session type
+                            var cellContent = cell.textContent;
+                            var sessionIndex = cellContent.indexOf(sessionType);
+                            if (sessionIndex !== -1) {
+                                cell.textContent = cellContent.replace(' / ' + sessionType, '');
+                            }
+
+                            // Remove the course name if it is the only content in the cell
+                            if (cell.textContent.trim() === courseName) {
+                                cell.textContent = '';
+                            }
+
+                            // Remove the slash if it exists at the beginning or end of the cell content
+                            cell.textContent = cell.textContent.replace(/(^\/)|(\/$)/g, '');
+                        }
+                    }
+                }
+            }
+        }
+
+        function getRowFromTime(time) {
+            for (var i = 0; i < timeValues.length; i++) {
+                if (time === timeValues[i]) {
+                    return i + 1;
+                }
+            }
+            return -1;
+        }
+    </script>
+</head>
+<body>
+    <h2>Timetable</h2>
+
+    <div class="checkbox-container">
+        <label class="checkbox-label">
+            <input type="checkbox" value="Math" onchange="updateTimetable(this, 3, 'monday', '8:00 AM', '10:00 AM', 'lecture', 'monday', '10:00 AM', '12:00 PM', 'exercise', 'friday', '8:00 AM', '10:00 AM', 'project')"> Math
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" value="English" onchange="updateTimetable(this, 2, 'wednesday', '9:00 AM', '11:00 AM', 'lecture', 'thursday', '10:00 AM', '12:00 PM', 'exercise')"> English
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" value="Science" onchange="updateTimetable(this, 1, 'tuesday', '1:00 PM', '3:00 PM', 'lab')"> Science
+        </label>
+    </div>
+
+    <table class="timetable">
+        <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+        </tr>
+        <tr>
+            <td>8:00 AM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>9:00 AM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>10:00 AM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>11:00 AM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>12:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>1:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>2:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>3:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>4:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>5:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>6:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+        <tr>
+            <td>7:00 PM</td>
+            <td class="monday"></td>
+            <td class="tuesday"></td>
+            <td class="wednesday"></td>
+            <td class="thursday"></td>
+            <td class="friday"></td>
+        </tr>
+    </table>
+</body>
+</html>
