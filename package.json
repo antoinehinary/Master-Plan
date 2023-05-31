@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "fullcalendar": "^6.1.8",
+    "fullcalendar-scheduler": "^6.1.8",
+    "jquery": "^3.7.0",
+    "moment": "^2.29.4"
+  }
+}
