@@ -43,6 +43,44 @@
         .checkbox-label {
             margin-right: 20px;
         }
+
+        .legend-container {
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .lecture {
+            background-color: #ffcccc;
+        }
+
+        .exercise {
+            background-color: #ccffcc;
+        }
+
+        .written-exam {
+            background-color: #ccccff;
+        }
+
+        .oral-exam {
+            background-color: #ffffcc;
+        }
+
+        .project {
+            background-color: #ff99cc;
+        }
+
+        .tp {
+            background-color: #99ccff;
+        }
+
+        .lab {
+            background-color: #cc99ff;
+        }
     </style>
     <script>
         var timeValues = [
@@ -68,6 +106,7 @@
             var cells = timetable.getElementsByClassName(courseName);
             for (var i = 0; i < cells.length; i++) {
                 cells[i].textContent = '';
+                cells[i].className = '';
             }
 
             for (var j = 0; j < sessionsPerWeek; j++) {
@@ -86,30 +125,21 @@
                         if (checkbox.checked) {
                             // Add the course name and session type
                             if (cell.textContent !== '') {
-                                cell.textContent += ' / ' + sessionType;
+                                cell.textContent += '';
                             } else {
-                                cell.textContent = courseName + ' / ' + sessionType;
+                                cell.textContent = courseName;
                             }
+                            cell.classList.add(sessionType.toLowerCase());
                         } else {
-                            // Remove the session type
-                            var cellContent = cell.textContent;
-                            var sessionIndex = cellContent.indexOf(sessionType);
-                            if (sessionIndex !== -1) {
-                                cell.textContent = cellContent.replace(' / ' + sessionType, '');
-                            }
-
-                            // Remove the course name if it is the only content in the cell
-                            if (cell.textContent.trim() === courseName) {
-                                cell.textContent = '';
-                            }
-
-                            // Remove the slash if it exists at the beginning or end of the cell content
-                            cell.textContent = cell.textContent.replace(/(^\/)|(\/$)/g, '');
+                            // Remove the course name and session type
+                            cell.textContent = cell.textContent.replace(courseName, '').trim();
+                            cell.classList.remove(sessionType.toLowerCase());
                         }
                     }
                 }
             }
         }
+
 
         function getRowFromTime(time) {
             for (var i = 0; i < timeValues.length; i++) {
@@ -126,13 +156,13 @@
 
     <div class="checkbox-container">
         <label class="checkbox-label">
-            <input type="checkbox" value="Math" onchange="updateTimetable(this, 3, 'monday', '8:00 AM', '10:00 AM', 'lecture', 'monday', '10:00 AM', '12:00 PM', 'exercise', 'friday', '8:00 AM', '10:00 AM', 'project')"> Math
+            <input type="checkbox" value="Math" onchange="updateTimetable(this, 3, 'monday', '8:00 AM', '10:00 AM', 'Lecture', 'monday', '10:00 AM', '12:00 PM', 'Exercise', 'friday', '8:00 AM', '10:00 AM', 'Project')"> Math
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" value="English" onchange="updateTimetable(this, 2, 'wednesday', '9:00 AM', '11:00 AM', 'lecture', 'thursday', '10:00 AM', '12:00 PM', 'exercise')"> English
+            <input type="checkbox" value="English" onchange="updateTimetable(this, 2, 'wednesday', '9:00 AM', '11:00 AM', 'Written-Exam', 'thursday', '10:00 AM', '12:00 PM', 'Exercise')"> English
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" value="Science" onchange="updateTimetable(this, 1, 'tuesday', '1:00 PM', '3:00 PM', 'lab')"> Science
+            <input type="checkbox" value="Science" onchange="updateTimetable(this, 1, 'tuesday', '1:00 PM', '3:00 PM', 'Lab')"> Science
         </label>
     </div>
 
@@ -242,5 +272,15 @@
             <td class="friday"></td>
         </tr>
     </table>
+
+    <div class="legend-container">
+        <div class="legend-item lecture">Lecture</div>
+        <div class="legend-item exercise">Exercise</div>
+        <div class="legend-item written-exam">Written Exam</div>
+        <div class="legend-item oral-exam">Oral Exam</div>
+        <div class="legend-item project">Project</div>
+        <div class="legend-item tp">TP</div>
+        <div class="legend-item lab">Lab</div>
+    </div>
 </body>
 </html>
