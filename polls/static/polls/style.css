@@ -1,0 +1,72 @@
+.question-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.question-item {
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.question-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.question-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.choice-item {
+    margin-bottom: 5px;
+}
+
+.go-back-button,
+.go-home-button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.go-home-button {
+    margin-left: 10px;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown select {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .dropdown select option {
+    background-color: #f9f9f9;
+    color: black;
+  }
+  
+  .dropdown select:focus {
+    outline: none;
+    background-color: #444;
+  }
+  
+  .dropdown select option:hover {
+    background-color: #ddd;
+  }
+  

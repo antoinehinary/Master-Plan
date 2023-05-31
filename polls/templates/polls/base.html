@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Master Plan</title>
+    <style>
+        body {
+      font-family: Calibri, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #FFFFFF;
+      color: #000000;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      margin-top: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    nav::before,
+    nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: red;
+    }
+
+    nav::before {
+      top: -20px;
+    }
+
+    nav::after {
+      bottom: -20px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      border-radius: 5px;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin: 0 20px;
+    }
+
+    nav ul li a {
+      color: black;
+      text-decoration: none;
+	  font-size: 22px;
+    }
+
+    nav ul li a:hover {
+      color: red;
+      text-decoration: underline;
+	  font-size: 22px;
+    }
+
+    .about-section {
+      padding: 40px;
+    }
+
+    .about-section h2 {
+      text-align: center;
+    }
+
+    .buttons-container {
+      text-align: center;
+      margin-top: 10px;
+	  margin-bottom: 10px;
+    }
+
+    .buttons-container button {
+	  padding: 10px 20px;
+	  margin: 0 10px;
+	  font-size: 16px;
+	  background-color: red;
+	  color: white;
+	  border: none; /* Remove the button outline */
+	  border-radius: 15px; /* Add round corners */
+	}
+
+    .buttons-container button:hover {
+	  background-color: #8B0000; /* Change to darker red when hovered over */
+	}
+
+    .button-text {
+        font-size: 16px;
+    }
+    </style>
+</head>
+<body>
+    
+    <main>
+        {% block content %}
+        {% if request.path == '/' %}
+        <h2>Choose your Master</h2>
+        <p>This is the default content of the Home page.</p>
+        <a href="{% url 'polls:question_list' %}">Go to Polls</a>
+        {% else %}
+        {# Other page content goes here #}
+        {% endif %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Master Plan. All rights reserved.</p>
+        <!-- Other footer content goes here -->
+    </footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Calendar</h1>
+<ul>
+    {% for event in events %}
+    <li>{{ event.title }} - {{ event.start_date }} to {{ event.end_date }}</li>
+    {% empty %}
+    <li>No events</li>
+    {% endfor %}
+</ul>
+{% endblock %}

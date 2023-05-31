@@ -1,0 +1,1111 @@
+<html>
+<head>
+    <title>Master Plan - MicroTechnique</title>
+    <style>
+        .title {
+            text-align: center;
+            position: sticky;
+            top: 0;
+            background-color: #f1f1f1;
+            padding: 20px 0;
+            z-index: 80;
+        }
+        .dropdown {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .dropdown select {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        .content {
+            margin-top: 40px;
+            padding: 20px;
+            /* Add additional styles for the content area */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            display: none; /* Hide the table by default */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        .progress {
+            height: 20px;
+            margin-top: 10px;
+            background-color: hsl(0, 0%, 100%);
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .hide {
+            display: none;
+        }
+        #obligatory-title,
+        #optional-title,
+        #project-title,
+        #minor-title {
+            display: none;
+            color: #000; /* Change the color value as needed */
+        }
+
+        .percentage-container {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .percentage {
+            text-align: center;
+        }
+
+        .obligatory {
+            background-color: #F44336; /* Red */
+        }
+
+        .optional {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .project {
+            background-color: #2196F3; /* Blue */
+        }
+
+        .minor {
+            background-color: #FFEB3B; /* Yellow */
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+         }
+
+        .button:hover {
+            background-color: #ddd;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h2>MicroTechnique Master Program</h2>
+        <div class="dropdown">
+            <select id="courseDropdown" onchange="handleCourseTypeChange()">
+                <option value="" disabled selected>Select a Course Type</option>
+                <option value="only-courses">Only Courses</option>
+                <option value="courses-with-project">Courses with Project</option>
+                <option value="courses-with-minor">Courses with Minor</option>
+            </select>
+        </div>
+    </div>
+    <div class="content">
+        <p>Total Credits: <span id="totalCredits">0</span></p>
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+            <div class="percentage-container">
+                <span id="obligatoryPercentage" class="percentage obligatory" style="width: 0%;"></span>
+                <span id="optionalPercentage" class="percentage optional" style="width: 0%;"></span>
+                <span id="projectPercentage" class="percentage project" style="width: 0%;"></span>
+                <span id="minorPercentage" class="percentage minor" style="width: 0%;"></span>
+            </div>
+          </div>                            
+          <h3 id="obligatoryTitle" style="display: none;">Obligatory Courses</h3>
+          <table id="obligatoryTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Evaluation</th>
+                    <th>Semester</th>
+                    <th>Specialization</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Applied machine learning</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Autumn</td>
+                    <td>A</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+                </tr>
+                <tr>
+                    <td>Basics of mobile robotics</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>B</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+                </tr>
+                <tr>
+                    <td>Basics of robotics for manipulation</td>
+                    <td>3</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>C</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+                </tr>
+                <tr>
+                    <td>Model predictive control</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>A, B, C</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+                </tr>
+            </tbody>
+        </table>        
+          
+        <h3 id="optionalTitle" style="display: none;">Optional Courses</h3>
+<table id="optionalTable">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Evaluation</th>
+            <th>Semester</th>
+            <th>Specialization</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Advanced MEMS and microsystems</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Applied and industrial robotics</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+        </tr>
+        <tr>
+            <td>Applied machine learning</td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+        </tr>
+        <tr>
+            <td>Apprentissage et intelligence artificielle</td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+        </tr>
+        <tr>
+            <td>Imaging optics</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Introduction to additive manufacturing</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Laser fundamentals and applications for engineers</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Low-power radio design for IoT</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Manufacturing systems and supply chain dynamics</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Materials and technology of microfabrication</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Materials processing with intelligent systems</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Metrology</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Nanotechnology</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Optical detectors</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Scaling laws and simulations in micro- and nanosystems</td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+        </tr>
+        <tr>
+            <td>Selected topics in advanced optics</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+        <tr>
+            <td>Smart sensors for IoT</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+        </tr>
+            <tr>
+                <td>Advanced additive manufacturing technologies</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Advanced analog integrated circuit design</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Advanced control systems</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Advanced machine learning</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Advanced satellite positioning</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Aerial robotics</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Analyse de produits et systèmes</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Applied biomedical signal processing</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Audio</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Basics of mobile robotics</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Bioimage informatics</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Biomedical optics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Biomicroscopy I, II</td>
+                <td>7</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="7"></td>
+            </tr>
+            <tr>
+                <td>Bio-nanochip design</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Commande embarquée de moteurs</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Commande non linéaire</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Computational motor control</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Continuous improvement of manufacturing systems</td>
+                <td>5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+            </tr>
+            <tr>
+                <td>Deep learning for optical imaging</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Distributed intelligent systems</td>
+                <td>5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+            </tr>
+            <tr>
+                <td>Embedded systems</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Evolutionary robotics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Fundamentals and processes for photovoltaic devices</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Fundamentals of analog and mixed signal VLSI design</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Fundamentals of biophotonics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Fundamentals of biosensors and electronic biochips</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Haptic human robot interfaces</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>IC design I</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Image processing I, II</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+            <tr>
+                <td>Industrial automation</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>La science quantique : une vision singulière</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Lab on app development for tablets and smartphones</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Large-area electronics: devices and materials</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Laser microprocessing</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Lasers: theory and modern applications</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Legged robots</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Machine learning programming</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Management de projet et analyse du risque</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>MEMS practicals I, II</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Metrology practicals</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Micro- and nanomechanical devices</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Model predictive control</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Nanobiotechnology and biophysics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Nanophotonics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Neural interfaces</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+            <tr>
+                <td>Neural signal and signal processing</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+            <tr>
+                <td>Nonlinear optics</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Optical design with ZEMAX OpticStudio</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Optics laboratories I, II</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+            <tr>
+                <td>Organic and printed electronics</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>Photonic systems and technology</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Physics of photonic semiconductor devices</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Quantum and nanocomputing</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+            <tr>
+                <td>Radio frequency circuits design techniques</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Sensors in medical instrumentation</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Space mission design and operations</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+            </tr>
+            <tr>
+                <td>System identification</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Systems engineering</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Techniques d'assemblage</td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+            </tr>
+            <tr>
+                <td>Transducers for classical and quantum applications</td>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+            </tr>
+            <tr>
+                <td>Translational neuroengineering</td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+            </tr>
+        </tbody>
+    </table>  
+
+
+        <h3 id="projectTitle" style="display: none;">Project</h3>
+        <table id="projectTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Specialization</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Project 1</td>
+                    <td>10</td>
+                    <td>B</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="10"></td>
+                </tr>
+                <!-- Add more rows for project courses -->
+            </tbody>
+        </table>
+
+        <h3 id="minorTitle" style="display: none;">Minor</h3>
+<table id="minorTable">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Biomedical technologies</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Computational science and engineering</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Data and Internet of Things</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Energy</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Engineering for sustainability</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Management, technology and entrepreneurship</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Neuro-X</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Photonics</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Physics of living systems</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Quantum science and engineering</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+        <tr>
+            <td>Space technologies</td>
+            <td>30</td>
+            <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+        <div class="button-container">
+            <a href="#" class="button" onclick="goBack()">Back</a>
+            <a href="{% url 'polls:semesters' %}" class="button" onclick="storeSelectedCourses()">Next</a>
+        </div>               
+    </div>
+    
+    <script>
+        var totalCredits = 0;
+        var obligatoryCredits = 0;
+        var optionalCredits = 0;
+        var projectCredits = 0;
+        var minorCredits = 0;
+        var checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+        // Function to store selected courses in session storage
+        function storeSelectedCourses() {
+            var selectedCourses = [];
+
+            // Iterate over all checkboxes
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    var courseName = checkbox.parentNode.parentNode.cells[0].textContent;
+                    var credits = parseInt(checkbox.getAttribute("data-credits"));
+                    var semester = checkbox.parentNode.parentNode.cells[3].textContent;
+
+                    // Create an object representing the selected course
+                    var course = {
+                        name: courseName,
+                        credits: credits,
+                        semester: semester
+                    };
+
+                    // Add the course to the selectedCourses array
+                    selectedCourses.push(course);
+                }
+            });
+
+            // Store the selected courses in session storage
+            sessionStorage.setItem("selectedCourses", JSON.stringify(selectedCourses));
+
+            // Retrieve the selected course type from the dropdown
+            var selectedCourseType = document.getElementById("courseDropdown").value;
+
+            // Redirect to the "Semester Distribution" page and pass the selected course type as a query parameter
+            window.location.href = "semester-division.html";
+        }
+        
+        function updateProgressBar() {
+            var progressBar = document.getElementById("progressBar");
+            if(totalCredits != 0)
+            {
+                var totalProgress = (totalCredits / (totalCredits + minorCredits)) * 100;
+            } else {
+                var totalProgress = 0;
+            }
+
+            progressBar.style.width = totalProgress + "%";
+
+            var obligatoryPercentage = obligatoryCredits !== 0 ? ((obligatoryCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var optionalPercentage = optionalCredits !== 0 ? ((optionalCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var projectPercentage = projectCredits !== 0 ? ((projectCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var minorPercentage = minorCredits !== 0 ? ((minorCredits / totalCredits) * 100).toFixed(2) : "0.00";
+
+            document.getElementById("obligatoryPercentage").style.width = obligatoryPercentage + "%";
+            document.getElementById("optionalPercentage").style.width = optionalPercentage + "%";
+            document.getElementById("projectPercentage").style.width = projectPercentage + "%";
+            document.getElementById("minorPercentage").style.width = minorPercentage + "%";
+        }
+
+        function updateCredits(checkbox) {
+            var credits = parseInt(checkbox.getAttribute("data-credits"));
+            var sectionId = checkbox.closest("table").id;
+            
+            if (checkbox.checked) {
+                totalCredits += credits;
+                switch (sectionId) {
+                case "obligatoryTable":
+                    obligatoryCredits += credits;
+                    break;
+                case "optionalTable":
+                    optionalCredits += credits;
+                    break;
+                case "projectTable":
+                    projectCredits += credits;
+                    break;
+                case "minorTable":
+                    minorCredits += credits;
+                    break;
+                }
+            } else {
+                totalCredits -= credits;
+                switch (sectionId) {
+                case "obligatoryTable":
+                    obligatoryCredits -= credits;
+                    break;
+                case "optionalTable":
+                    optionalCredits -= credits;
+                    break;
+                case "projectTable":
+                    projectCredits -= credits;
+                    break;
+                case "minorTable":
+                    minorCredits -= credits;
+                    break;
+                }
+            }
+
+            updateProgressBar();
+            document.getElementById("totalCredits").textContent = totalCredits;
+            
+            // Update the percentages only if totalCredits is greater than 0
+            if (totalCredits > 0 && checkbox.checked == true) {
+                document.getElementById("obligatoryPercentage").textContent = obligatoryCredits > 0 ? obligatoryCredits + " credits " : ""; //((obligatoryCredits / totalCredits) * 100).toFixed(2) + "%" : "";
+                document.getElementById("optionalPercentage").textContent = optionalCredits > 0 ? optionalCredits + " credits " : "" ; //((optionalCredits / totalCredits) * 100).toFixed(2) + "%" : "";
+                document.getElementById("projectPercentage").textContent = projectCredits > 0 ? projectCredits + " credits " : "" ; //((projectCredits / totalCredits) * 100).toFixed(2) + "%" : "";
+                document.getElementById("minorPercentage").textContent = minorCredits > 0 ? minorCredits + " credits " : "" ; //((minorCredits / totalCredits) * 100).toFixed(2) + "%" : "";
+            } else {
+                // Hide all percentages if no courses are selected
+                document.getElementById("obligatoryPercentage").textContent = "";
+                document.getElementById("optionalPercentage").textContent = "";
+                document.getElementById("projectPercentage").textContent = "";
+                document.getElementById("minorPercentage").textContent = "";
+            }
+        }
+
+        function handleCourseTypeChange() {
+            var courseType = document.getElementById("courseDropdown").value;
+            var obligatoryTitle = document.getElementById("obligatoryTitle");
+            var optionalTitle = document.getElementById("optionalTitle");
+            var projectTitle = document.getElementById("projectTitle");
+            var minorTitle = document.getElementById("minorTitle");
+            var obligatoryTable = document.getElementById("obligatoryTable");
+            var optionalTable = document.getElementById("optionalTable");
+            var projectTable = document.getElementById("projectTable");
+            var minorTable = document.getElementById("minorTable");
+
+            if (courseType === "only-courses") {
+                totalCredits -= projectCredits + minorCredits;
+                projectCredits = 0;
+                minorCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "none";
+                minorTitle.style.display = "none";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "none";
+                minorTable.style.display = "none";
+            } else if (courseType === "courses-with-project") {
+                totalCredits -= minorCredits;
+                minorCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "block";
+                minorTitle.style.display = "none";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "table";
+                minorTable.style.display = "none";
+            } else if (courseType === "courses-with-minor") {
+                totalCredits -= projectCredits;
+                projectCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "none";
+                minorTitle.style.display = "block";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "none";
+                minorTable.style.display = "table";
+
+            }
+            
+            // Uncheck all checkboxes
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+
+            obligatoryCredits = optionalCredits = minorCredits = projectCredits = totalCredits = 0;
+
+            updateProgressBar();
+            document.getElementById("totalCredits").textContent = totalCredits;   
+            document.getElementById("obligatoryPercentage").textContent = "";
+            document.getElementById("optionalPercentage").textContent = "";
+            document.getElementById("projectPercentage").textContent = "";
+            document.getElementById("minorPercentage").textContent = "";
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

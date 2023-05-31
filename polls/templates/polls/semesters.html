@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semester Distribution</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .title {
+          text-align: center;
+          position: sticky;
+          top: 0;
+          background-color: #f1f1f1;
+          padding: 20px 0;
+          z-index: 80;
+      }
+      
+      .dropdown {
+          text-align: center;
+          margin-top: 30px;
+      }
+      
+      .dropdown select {
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 4px;
+      }
+      
+      .content {
+          margin-top: 40px;
+          padding: 20px;
+      }
+      
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 20px;
+      }
+
+      th, td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+      
+      .progress {
+          height: 20px;
+          margin-top: 10px;
+          background-color: hsl(0, 0%, 100%);
+          position: relative;
+      }
+
+      .progress-bar {
+          height: 100%;
+          width: 0%;
+          display: inline-block;
+          position: absolute;
+          top: 0;
+          left: 0;
+      }
+
+      .button-container {
+          text-align: center;
+          margin-top: 20px;
+      }
+
+      .button {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #f1f1f1;
+          color: #333;
+          text-decoration: none;
+          border-radius: 4px;
+          margin-right: 10px;
+          transition: background-color 0.3s ease;
+       }
+
+      .button:hover {
+          background-color: #ddd;
+      }
+  </style>
+</head>
+<body>
+<div class="title">
+  <h1>Semester Distribution</h2>
+</div>
+<h3>Autumn Courses</h3>
+<div id="autumnCourses"></div>
+<div id="progressBars">
+  <div id="ma1Progress">
+      <label>MA1 :</label>
+      <progress id="ma1ProgressBar" value="0" max="30"></progress>
+      <span id="ma1Credits">0/30</span>
+  </div>
+  <div id="ma2Progress">
+      <label>MA3 :</label>
+      <progress id="ma2ProgressBar" value="0" max="30"></progress>
+      <span id="ma2Credits">0/30</span>
+  </div>
+</div>
+<h3>Spring Courses</h3>
+<div id="springCourses"></div>
+
+<div id="progressBars">
+  <div id="ma3Progress">
+      <label>MA2 :</label>
+      <progress id="ma3ProgressBar" value="0" max="30"></progress>
+      <span id="ma3Credits">0/30</span>
+  </div>
+  <div id="ma4Progress">
+      <label>MA4 :</label>
+      <progress id="ma4ProgressBar" value="0" max="30"></progress>
+      <span id="ma4Credits">0/30</span>
+  </div>
+</div>
+<div class="button-container">
+    <a href="#" class="button" onclick="goBack()">Back</a>
+    <a href="{% url 'polls:results' %}" class="button" onclick="storeSelectedCourses()" >Generate</a>
+</div>
+<div>
+    Counter: <span id="counter">0</span>
+</div>
+<div>
+    countercheck: <span id="countercheck">0</span>
+</div>
+<div>
+    Counter1: <span id="counter1">0</span>
+</div>
+<div>
+    Counter2: <span id="counter2">0</span>
+</div>
+<div>
+    Counter3: <span id="counter3">0</span>
+</div>
+<div>
+    Counter4: <span id="counter4">0</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    var counter = 0;
+    var countercheck = 0;
+    function storeSelectedCourses() {
+    counter++;
+    document.getElementById("counter").textContent = counter;
+
+  var ma1Courses = [];
+  var ma2Courses = [];
+  var ma3Courses = [];
+  var ma4Courses = [];
+  var ma1Count = 0;
+  var ma2Count = 0;
+  var ma3Count = 0;
+  var ma4Count = 0;
+
+  checkboxes.forEach(function(checkbox) {
+    if (checkbox.checked) {
+      var courseName = checkbox.parentNode.parentNode.cells[0].textContent;
+      var credits = parseInt(checkbox.parentNode.parentNode.cells[1].textContent);
+      var course = {
+        name: courseName,
+        credits: credits,
+      };
+      if (checkbox.name === "MA1Checkbox") {
+        ma1Courses.push(course);
+        ma1Count++;
+      } 
+      if (checkbox.name === "MA2Checkbox") {
+        ma2Courses.push(course);
+        ma2Count++;
+        countercheck++;
+        document.getElementById("countercheck").textContent = countercheck;
+      } 
+      if (checkbox.name === "MA3Checkbox") {
+        ma3Courses.push(course);
+        ma3Count++;
+      } 
+      if (checkbox.name === "MA4Checkbox") {
+        ma4Courses.push(course);
+        ma4Count++;
+      }
+    }
+  });
+
+  if(ma1Courses.length == 0)
+  {
+    document.getElementById("counter1").textContent = 99;
+  } else {
+    document.getElementById("counter1").textContent = ma1Count;
+  }
+  if(ma2Courses.length == 0)
+  {
+    document.getElementById("counter2").textContent = 99;
+  } else {
+    document.getElementById("counter2").textContent = ma2Count;
+  }
+  if(ma3Courses.length == 0)
+  {
+    document.getElementById("counter3").textContent = 99;
+  }else {
+    document.getElementById("counter3").textContent = ma3Count;
+  }
+  if(ma4Courses.length == 0)
+  {
+    document.getElementById("counter4").textContent = 99;
+  }else {
+    document.getElementById("counter4").textContent = ma4Count;
+  }
+
+  sessionStorage.setItem("selectedCourses1", JSON.stringify(ma1Courses));
+  sessionStorage.setItem("selectedCourses2", JSON.stringify(ma2Courses));
+  sessionStorage.setItem("selectedCourses3", JSON.stringify(ma3Courses));
+  sessionStorage.setItem("selectedCourses4", JSON.stringify(ma4Courses));
+}
+
+
+      // Retrieve the selected courses from session storage
+      var selectedCourses = JSON.parse(sessionStorage.getItem("selectedCourses"));
+
+      // Create two arrays to store courses for the autumn and spring semesters
+      var autumnCourses = [];
+      var springCourses = [];
+
+      // Iterate over the selected courses and categorize them based on the semester
+      selectedCourses.forEach(function (course) {
+          if (course.semester.toLowerCase() === "autumn") {
+              autumnCourses.push(course);
+          } else if (course.semester.toLowerCase() === "spring") {
+              springCourses.push(course);
+          }
+      });
+
+      // Function to generate a table row for a course
+      function createTableRow(course, includeMA1, includeMA3) {
+          var row = document.createElement("tr");
+          var nameCell = document.createElement("td");
+          var creditsCell = document.createElement("td");
+          var checkboxCellMA1 = document.createElement("td");
+          var checkboxCellMA2 = document.createElement("td");
+
+          nameCell.textContent = course.name;
+          creditsCell.textContent = course.credits;
+
+          // Create the checkboxes for MA1, MA2, MA3 and MA4
+          var checkboxMA1 = document.createElement("input");
+          checkboxMA1.type = "checkbox";
+          checkboxMA1.name = "MA1Checkbox";
+          checkboxMA1.value = course.credits; // Use course.value instead of course.credits
+         
+
+          var checkboxMA2 = document.createElement("input");
+          checkboxMA2.type = "checkbox";
+          checkboxMA2.name = "MA2Checkbox";
+          checkboxMA2.value = course.credits;
+
+          var checkboxMA3 = document.createElement("input");
+          checkboxMA3.type = "checkbox";
+          checkboxMA3.name = "MA3Checkbox";
+          checkboxMA3.value = course.credits;
+
+          var checkboxMA4 = document.createElement("input");
+          checkboxMA4.type = "checkbox";
+          checkboxMA4.name = "MA4Checkbox";
+          checkboxMA4.value = course.credits;
+
+          checkboxMA1.addEventListener("change", function () {
+              if (checkboxMA1.checked) {
+                  checkboxMA2.checked = false;
+              }
+              updateProgressBars();
+          });
+          
+          checkboxMA2.addEventListener("change", function () {
+              if (checkboxMA2.checked) {
+                  checkboxMA1.checked = false;
+              }
+              updateProgressBars();
+          });
+          
+          checkboxMA3.addEventListener("change", function () {
+              if (checkboxMA3.checked) {
+                  checkboxMA4.checked = false;
+              }
+              updateProgressBars();
+          });
+          
+          checkboxMA4.addEventListener("change", function () {
+              if (checkboxMA4.checked) {
+                  checkboxMA3.checked = false;
+              }
+              updateProgressBars();
+          });
+
+          updateProgressBars();
+
+          if (course.semester.toLowerCase() === "autumn") {
+              checkboxCellMA1.appendChild(checkboxMA1);
+              checkboxCellMA2.appendChild(checkboxMA2);
+          } else {
+              checkboxCellMA1.appendChild(checkboxMA3);
+              checkboxCellMA2.appendChild(checkboxMA4);
+          }
+
+          row.appendChild(nameCell);
+          row.appendChild(creditsCell);
+          row.appendChild(checkboxCellMA1);
+          row.appendChild(checkboxCellMA2);
+
+          return row;
+      }
+
+      // Function to generate a table with the given courses
+      function createTable(courses) {
+          var table = document.createElement("table");
+          var tableHead = document.createElement("thead");
+          var tableBody = document.createElement("tbody");
+
+          // Create the table header
+          var headerRow = document.createElement("tr");
+          var nameHeader = document.createElement("th");
+          var creditsHeader = document.createElement("th");
+          var checkboxHeader = document.createElement("th");
+          var checkboxHeader2 = document.createElement("th");
+
+          nameHeader.textContent = "Course Name";
+          creditsHeader.textContent = "Credits";
+
+          // Replace column names based on the semester
+          if (courses[0].semester.toLowerCase() === "autumn") {
+              checkboxHeader.textContent = "MA1";
+              checkboxHeader2.textContent = "MA3";
+          } else if (courses[0].semester.toLowerCase() === "spring") {
+              checkboxHeader.textContent = "MA2";
+              checkboxHeader2.textContent = "MA4";
+          }
+
+          headerRow.appendChild(nameHeader);
+          headerRow.appendChild(creditsHeader);
+          headerRow.appendChild(checkboxHeader);
+          headerRow.appendChild(checkboxHeader2);
+
+          tableHead.appendChild(headerRow);
+          table.appendChild(tableHead);
+
+          // Create the table body with course rows
+          courses.forEach(function (course) {
+              var row = createTableRow(course);
+              tableBody.appendChild(row);
+          });
+
+          table.appendChild(tableBody);
+
+          return table;
+      }
+
+      // Generate the tables for autumn and spring courses
+      var autumnTable = createTable(autumnCourses);
+      var springTable = createTable(springCourses);
+
+      // Find the container elements in the "semester.html" page where the tables will be inserted
+      var autumnContainer = document.getElementById("autumnCourses");
+      var springContainer = document.getElementById("springCourses");
+
+      // Append the tables to the respective containers
+      autumnContainer.appendChild(autumnTable);
+      springContainer.appendChild(springTable);
+
+      function updateProgressBars() {
+    var ma1Credits = 0;
+    var ma2Credits = 0;
+    var ma3Credits = 0;
+    var ma4Credits = 0;
+
+    var checkboxesMA1 = document.querySelectorAll('input[name="MA1Checkbox"]:checked');
+    var checkboxesMA2 = document.querySelectorAll('input[name="MA2Checkbox"]:checked');
+    var checkboxesMA3 = document.querySelectorAll('input[name="MA3Checkbox"]:checked');
+    var checkboxesMA4 = document.querySelectorAll('input[name="MA4Checkbox"]:checked');
+
+    checkboxesMA1.forEach(function (checkbox) {
+        ma1Credits += parseInt(checkbox.value);
+    });
+
+    checkboxesMA2.forEach(function (checkbox) {
+        ma2Credits += parseInt(checkbox.value);
+    });
+
+    checkboxesMA3.forEach(function (checkbox) {
+        ma3Credits += parseInt(checkbox.value);
+    });
+
+    checkboxesMA4.forEach(function (checkbox) {
+        ma4Credits += parseInt(checkbox.value);
+    });
+
+    // Update the credits display for each MA
+    document.getElementById("ma1Credits").textContent = ma1Credits + "/30";
+    document.getElementById("ma2Credits").textContent = ma2Credits + "/30";
+    document.getElementById("ma3Credits").textContent = ma3Credits + "/30";
+    document.getElementById("ma4Credits").textContent = ma4Credits + "/30";
+
+    updateProgressBarsUI(ma1Credits, ma2Credits, ma3Credits, ma4Credits);
+}
+
+function updateProgressBarsUI(ma1Credits, ma2Credits, ma3Credits, ma4Credits) {
+    document.getElementById("ma1ProgressBar").value = ma1Credits;
+    document.getElementById("ma2ProgressBar").value = ma2Credits;
+    document.getElementById("ma3ProgressBar").value = ma3Credits;
+    document.getElementById("ma4ProgressBar").value = ma4Credits;
+}
+
+
+      // Refresh the HTML element
+      function refreshElement(elementId) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById(elementId).innerHTML = this.responseText;
+            }
+            };
+            xhttp.open("GET", "refresh_content.php", true); // Replace "refresh_content.php" with the URL of the server-side script that generates the updated content
+            xhttp.send();
+        }
+
+      // Call the updateProgressBars function initially to set the progress bars
+      updateProgressBars();
+
+      // Add event listeners to the checkboxes
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function (checkbox) {
+          checkbox.addEventListener("change", updateProgressBars);
+      });
+
+      function goBack() {
+          window.history.back();
+      }
+
+      function generatePDF() {
+        // Redirect to the results page
+        window.location.href = 'results.html';
+      }
+
+
+    function redirectToResults() {
+        // Redirect to the results page
+        window.location.href = 'polls/results/';
+    }
+    
+  </script>
+</body>
+</html>

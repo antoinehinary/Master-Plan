@@ -1,0 +1,622 @@
+<html>
+<head>
+    <title>Master Plan - Robotics</title>
+    <style>
+        .title {
+            text-align: center;
+            position: sticky;
+            top: 0;
+            background-color: #f1f1f1;
+            padding: 20px 0;
+            z-index: 80;
+        }
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #FFFFFF;
+            color: #000000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        nav::before,
+        nav::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: red;
+        }
+
+        nav::before {
+            top: -20px;
+        }
+
+        nav::after {
+            bottom: -20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        nav ul li a:hover {
+            color: red;
+            text-decoration: underline;
+            font-size: 22px;
+        }
+
+        .about-section {
+            padding: 40px;
+        }
+
+        .about-section h2 {
+            text-align: center;
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .buttons-container button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            background-color: red;
+            color: white;
+            border: none; /* Remove the button outline */
+            border-radius: 15px; /* Add round corners */
+        }
+        .buttons-container button:hover {
+            background-color: #8B0000; /* Change to darker red when hovered over */
+        }
+
+        .dropdown {
+            text-align: left;
+            margin-left: 50px;
+            margin-top: 30px;
+        }
+        .dropdown select {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        .content {
+            margin-top: 40px;
+            padding: 20px;
+            /* Add additional styles for the content area */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            display: none; /* Hide the table by default */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        .progress {
+            height: 20px;
+            margin-top: 10px;
+            background-color: hsl(0, 0%, 100%);
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .hide {
+            display: none;
+        }
+        #obligatory-title,
+        #optional-title,
+        #project-title,
+        #minor-title {
+            display: none;
+            color: #000; /* Change the color value as needed */
+        }
+
+        .percentage-container {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .percentage {
+            text-align: center;
+        }
+
+        .obligatory {
+            background-color: #F44336; /* Red */
+        }
+
+        .obligatoryTable{
+            background-color: #8f0000;
+        }
+
+        .optional {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .project {
+            background-color: #2196F3; /* Blue */
+        }
+
+        .minor {
+            background-color: #FFEB3B; /* Yellow */
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+         }
+
+        .button:hover {
+            background-color: #ddd;
+        }
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h2>Neuro-X Master Program</h2>
+        <div class="dropdown">
+            <span style="font-size: 20px; font-family: Calibri, sans-serif;">Filter:</span>
+            <select id="courseDropdown" onchange="handleCourseTypeChange()">
+              <option value="" disabled selected>Select a Course Type</option>
+              <option value="only-courses">Only Courses</option>
+              <option value="courses-with-project">Courses with Project</option>
+              <option value="courses-with-minor">Courses with Minor</option>
+            </select>
+          </div>
+    </div>
+    <div class="content">
+        <div class="progress" style="display: none;">
+            <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+            <div class="percentage-container">
+                <span id="obligatoryPercentage" class="percentage obligatory" style="width: 0%;"></span>
+                <span id="optionalPercentage" class="percentage optional" style="width: 0%;"></span>
+                <span id="projectPercentage" class="percentage project" style="width: 0%;"></span>
+                <span id="minorPercentage" class="percentage minor" style="width: 0%;"></span>
+            </div>
+          </div>             
+        <p>Total Credits: <span id="totalCredits">0</span></p>                       
+          <h3 id="obligatoryTitle" style="display: none;" >Obligatory Courses</h3>
+          <table id="obligatoryTable">
+            <thead>
+                <tr style="color: white;">
+                    <th style="background-color: #ff0000;">Course Name</th>
+                    <th style="background-color: #ff0000;">Credits</th>
+                    <th style="background-color: #ff0000;">Evaluation</th>
+                    <th style="background-color: #ff0000;">Semester</th>
+                    <th style="background-color: #ff0000;">Specialization</th>
+                    <th style="background-color: #ff0000;">Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Applied machine learning</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Autumn</td>
+                    <td>A</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4" checked></td>
+                </tr>
+                <tr>
+                    <td>Basics of mobile robotics</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>B</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3" checked></td>
+                </tr>
+                <tr>
+                    <td>Basics of robotics for manipulation</td>
+                    <td>3</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>C</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4" checked></td>
+                </tr>
+                <tr>
+                    <td>Model predictive control</td>
+                    <td>4</td>
+                    <td>Oral Exam</td>
+                    <td>Spring</td>
+                    <td>A, B, C</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4" checked></td>
+                </tr>
+            </tbody>
+        </table>        
+          
+        <h3 id="optionalTitle" style="display: none;">Optional Courses</h3>
+        <table id="optionalTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Evaluation</th>
+                    <th>Semester</th>
+                    <th>Specialization</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Advanced control systems</td>
+                    <td>3</td>
+                    <td>Oral Exam</td>
+                    <td>Summer/Spring</td>
+                    <td>A, B, C</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="projectTitle" style="display: none;">Project</h3>
+        <table id="projectTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Specialization</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Project 1</td>
+                    <td>10</td>
+                    <td>B</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="10"></td>
+                </tr>
+                <!-- Add more rows for project courses -->
+            </tbody>
+        </table>
+
+        <h3 id="minorTitle" style="display: none;">Minor</h3>
+        <table id="minorTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Biomedical technologies</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+                <tr>
+                    <td>Computer science</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+                <tr>
+                    <td>Engineering for sustainability</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+                <tr>
+                    <td>Neuro-X</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+                <tr>
+                    <td>Photonics</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+                <tr>
+                    <td>Space technologies</td>
+                    <td>30</td>
+                    <td><input type="checkbox" onclick="updateCredits(this)" data-credits="30"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="#" class="button" onclick="goBack()">Back</a>
+            <a href="{% url 'polls:semesters' %}" class="button" onclick="storeSelectedCourses()">Next</a>
+        </div>               
+    </div>
+    <script>
+        // Variable declarations
+        var totalCredits = 0;
+        var obligatoryCredits = 0;
+        var optionalCredits = 0;
+        var projectCredits = 0;
+        var minorCredits = 0;
+        var checkboxes = document.querySelectorAll("input[type='checkbox']");
+    
+        // Function to store selected courses in session storage
+        function storeSelectedCourses() {
+            var selectedCourses = [];
+    
+            // Iterate over all checkboxes
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    // Get course details from the table cells
+                    var courseName = checkbox.parentNode.parentNode.cells[0].textContent;
+                    var credits = parseInt(checkbox.getAttribute("data-credits"));
+                    var semester = checkbox.parentNode.parentNode.cells[3].textContent;
+    
+                    // Create an object representing the selected course
+                    var course = {
+                        name: courseName,
+                        credits: credits,
+                        semester: semester
+                    };
+    
+                    // Add the course to the selectedCourses array
+                    selectedCourses.push(course);
+                }
+            });
+    
+            // Store the selected courses in session storage
+            sessionStorage.setItem("selectedCourses", JSON.stringify(selectedCourses));
+    
+            // Retrieve the selected course type from the dropdown
+            var selectedCourseType = document.getElementById("courseDropdown").value;
+    
+            // Redirect to the "Semester Distribution" page and pass the selected course type as a query parameter
+            window.location.href = "semester-division.html";
+        }
+        
+        // Function to update the progress bar and credit percentages
+        function updateProgressBar() {
+            var progressBar = document.getElementById("progressBar");
+            if(totalCredits != 0)
+            {
+                var totalProgress = (totalCredits / (totalCredits + minorCredits)) * 100;
+            } else {
+                var totalProgress = 0;
+            }
+            progressBar.style.width = totalProgress + "%";
+    
+            var obligatoryPercentage = obligatoryCredits !== 0 ? ((obligatoryCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var optionalPercentage = optionalCredits !== 0 ? ((optionalCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var projectPercentage = projectCredits !== 0 ? ((projectCredits / totalCredits) * 100).toFixed(2) : "0.00";
+            var minorPercentage = minorCredits !== 0 ? ((minorCredits / totalCredits) * 100).toFixed(2) : "0.00";
+    
+            // Update the width and text content of the credit percentages
+            document.getElementById("obligatoryPercentage").style.width = obligatoryPercentage + "%";
+            document.getElementById("optionalPercentage").style.width = optionalPercentage + "%";
+            document.getElementById("projectPercentage").style.width = projectPercentage + "%";
+            document.getElementById("minorPercentage").style.width = minorPercentage + "%";
+        }
+    
+        // Function to update the credits and percentages when a checkbox is clicked
+        function updateCredits(checkbox) {
+            var credits = parseInt(checkbox.getAttribute("data-credits"));
+            var sectionId = checkbox.closest("table").id;
+            
+            if (checkbox.checked) {
+                // Increment credits based on the section and update the total credits
+                totalCredits += credits;
+                switch (sectionId) {
+                    case "obligatoryTable":
+                        obligatoryCredits += credits;
+                        break;
+                    case "optionalTable":
+                        optionalCredits += credits;
+                        break;
+                    case "projectTable":
+                        projectCredits += credits;
+                        break;
+                    case "minorTable":
+                        minorCredits += credits;
+                        break;
+                }
+            } else {
+                // Decrement credits based on the section and update the total credits
+                totalCredits -= credits;
+                switch (sectionId) {
+                    case "obligatoryTable":
+                        obligatoryCredits -= credits;
+                        break;
+                    case "optionalTable":
+                        optionalCredits -= credits;
+                        break;
+                    case "projectTable":
+                        projectCredits -= credits;
+                        break;
+                    case "minorTable":
+                        minorCredits -= credits;
+                        break;
+                }
+            }
+    
+            // Call the function to update the progress bar and credit percentages
+            updateProgressBar();
+            document.getElementById("totalCredits").textContent = totalCredits;
+            
+            // Update the credit percentages only if totalCredits is greater than 0 and checkbox is checked
+            if (totalCredits > 0 && checkbox.checked == true) {
+                document.getElementById("obligatoryPercentage").textContent = obligatoryCredits > 0 ? obligatoryCredits + " credits " : "";
+                document.getElementById("optionalPercentage").textContent = optionalCredits > 0 ? optionalCredits + " credits " : "";
+                document.getElementById("projectPercentage").textContent = projectCredits > 0 ? projectCredits + " credits " : "";
+                document.getElementById("minorPercentage").textContent = minorCredits > 0 ? minorCredits + " credits " : "";
+            } else {
+                // Hide all percentages if no courses are selected
+                document.getElementById("obligatoryPercentage").textContent = "";
+                document.getElementById("optionalPercentage").textContent = "";
+                document.getElementById("projectPercentage").textContent = "";
+                document.getElementById("minorPercentage").textContent = "";
+            }
+        }
+    
+        window.addEventListener('load', load_courses);
+
+        function load_courses()
+        {
+            var courseType = document.getElementById("courseDropdown").value;
+            var obligatoryTitle = document.getElementById("obligatoryTitle");
+            var optionalTitle = document.getElementById("optionalTitle");
+            var projectTitle = document.getElementById("projectTitle");
+            var minorTitle = document.getElementById("minorTitle");
+            var obligatoryTable = document.getElementById("obligatoryTable");
+            var optionalTable = document.getElementById("optionalTable");
+            var projectTable = document.getElementById("projectTable");
+            var minorTable = document.getElementById("minorTable");
+
+            // Calculate total credits from obligatory courses
+            checkboxes.forEach(function(checkbox) {
+                var sectionId = checkbox.closest("table").id;
+                if (sectionId === "obligatoryTable" && checkbox.checked) {
+                    var credits = parseInt(checkbox.getAttribute("data-credits"));
+                    totalCredits += credits;
+                    obligatoryCredits += credits;
+                }
+            });
+
+            obligatoryTitle.style.display = "block";
+            optionalTitle.style.display = "block";
+            projectTitle.style.display = "block";
+            minorTitle.style.display = "block";
+            obligatoryTable.style.display = "table";
+            optionalTable.style.display = "table";
+            projectTable.style.display = "table";
+            minorTable.style.display = "table";
+
+             // Call the function to update the progress bar and credit percentages
+            updateProgressBar();
+            document.getElementById("totalCredits").textContent = totalCredits;
+            document.getElementById("obligatoryPercentage").textContent = obligatoryCredits > 0 ? obligatoryCredits + " credits " : "";
+            document.getElementById("optionalPercentage").textContent = optionalCredits > 0 ? optionalCredits + " credits " : "";
+            document.getElementById("projectPercentage").textContent = projectCredits > 0 ? projectCredits + " credits " : "";
+            document.getElementById("minorPercentage").textContent = minorCredits > 0 ? minorCredits + " credits " : "";
+        }
+
+        // Function to handle the course type change in the dropdown
+        function handleCourseTypeChange() {
+            var courseType = document.getElementById("courseDropdown").value;
+            var obligatoryTitle = document.getElementById("obligatoryTitle");
+            var optionalTitle = document.getElementById("optionalTitle");
+            var projectTitle = document.getElementById("projectTitle");
+            var minorTitle = document.getElementById("minorTitle");
+            var obligatoryTable = document.getElementById("obligatoryTable");
+            var optionalTable = document.getElementById("optionalTable");
+            var projectTable = document.getElementById("projectTable");
+            var minorTable = document.getElementById("minorTable");
+
+            // Adjust the table display and titles based on the selected course type
+            if (courseType === "only-courses") {
+                totalCredits -= projectCredits + minorCredits;
+                projectCredits = 0;
+                minorCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "none";
+                minorTitle.style.display = "none";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "none";
+                minorTable.style.display = "none";
+            } else if (courseType === "courses-with-project") {
+                totalCredits -= minorCredits;
+                minorCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "block";
+                minorTitle.style.display = "none";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "table";
+                minorTable.style.display = "none";
+            } else if (courseType === "courses-with-minor") {
+                totalCredits -= projectCredits;
+                projectCredits = 0;
+                obligatoryTitle.style.display = "block";
+                optionalTitle.style.display = "block";
+                projectTitle.style.display = "none";
+                minorTitle.style.display = "block";
+                obligatoryTable.style.display = "table";
+                optionalTable.style.display = "table";
+                projectTable.style.display = "none";
+                minorTable.style.display = "table";
+            }
+            
+            // Uncheck all checkboxes
+            checkboxes.forEach(function (checkbox) {
+                var sectionId = checkbox.closest("table").id;
+                if (sectionId !== "obligatoryTable") {
+                    checkbox.checked = false;
+                }
+            });
+
+            // Reset credits and update the progress bar, total credits, and credit percentages
+            obligatoryCredits = optionalCredits = minorCredits = projectCredits = totalCredits = 0;
+            updateProgressBar();
+            document.getElementById("totalCredits").textContent = totalCredits;   
+            document.getElementById("obligatoryPercentage").textContent = "";
+            document.getElementById("optionalPercentage").textContent = "";
+            document.getElementById("projectPercentage").textContent = "";
+            document.getElementById("minorPercentage").textContent = "";
+        }
+    
+        // Function to navigate back
+        function goBack() {
+            window.history.back();
+        }
+
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,12 @@
+# python
+npm install python 3.8.5
+
+# Django
+npm install django 1.7.0
+
+# For the calendar
+npm install fullcalendar
+npm install jquery
+npm install jquery moment fullcalendar
+pip install django-bootstrap-datepicker-plus 
+pip install django-bootstrap-datepicker

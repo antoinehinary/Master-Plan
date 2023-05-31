@@ -1,0 +1,142 @@
+{% extends "polls/base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MASTER PLAN - Choose a Master's Program</title>
+  <style>
+    /* Common Styles */
+    body {
+      font-family: Calibri, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #FFFFFF;
+    }
+
+	header {
+	  background-color: #FFFFFF;
+	  color: #000000; /* Change this to #000000 for black text */
+	  padding: 20px;
+	  text-align: center;
+	}
+
+    /* Master's Program Page Specific Styles */
+    .program-container {
+      padding: 50px;
+      background-color: #F5F5F5;
+    }
+
+    .program-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .program-item {
+      width: 300px;
+      margin-bottom: 30px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .program-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .program-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .program-image img {
+      width: 100%;
+      height: auto;
+      transition: border-color 0.3s;
+    }
+
+    .program-name {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(255, 255, 255, 1);
+      color: #000000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+	  
+	.program-name:hover {
+	  color: red;
+	}
+
+
+    .program-item:hover .program-image img {
+      border: 2px solid red;
+    }
+	  
+	.program-item:hover .program-name {
+	  color: red;
+	}
+	  
+	  footer {
+	  text-align: center;
+	  margin-bottom: 10px;
+	  background-color: #8F0000;
+	  color: white;
+	  padding: 10px;
+	  max-width: 100%;
+	}
+	    
+  </style>
+</head>
+<body>
+    <header>
+      <h1 style="color: #000000;">MASTER PLAN</h1>
+    </header>
+  
+    <div class="program-container">
+      <h2 style="color: #333333; text-align: center;">Choose a Master's Program</h2>
+      <div class="program-list">
+        <div class="program-item">
+          <div class="program-image">
+            <a href="{% url 'polls:robotics' %}">
+            <img src="https://github.com/antoinehinary/Master-Plan/blob/main/ok.jpg?raw=true" alt="Program 1">
+            </a>
+            <div class="program-name">Program 1</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-image">
+            <a href="{% url 'polls:neuroX' %}">
+            <img src="https://github.com/antoinehinary/Master-Plan/blob/main/ok.jpg?raw=true" alt="Program 2">
+            </a>
+            <div class="program-name">Program 2</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-image">
+            <img src="https://github.com/antoinehinary/Master-Plan/blob/main/ok.jpg?raw=true" alt="Program 3">
+            <div class="program-name">Program 3</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-image">
+            <img src="https://github.com/antoinehinary/Master-Plan/blob/main/ok.jpg?raw=true" alt="Program 4">
+            <div class="program-name">Program 4</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-image">
+            <img src="https://github.com/antoinehinary/Master-Plan/blob/main/ok.jpg?raw=true" alt="Program 5">
+            <div class="program-name">Program 5</div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </body>
+{% endblock %}

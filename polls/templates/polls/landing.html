@@ -1,0 +1,64 @@
+{% extends "polls/base.html" %}
+
+{% block content %}
+
+<style>
+    .buttons-container {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        text-decoration: none; /* Remove underline */
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #8B0000;
+    }
+
+    .button-text {
+        pointer-events: none; /* Disable click events on the text */
+    }
+
+</style>
+<nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Master Programs</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-section">
+    <h2>About Master Plan</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consequat tristique neque, id tincidunt enim posuere eu. Nulla facilisi. Proin id arcu id ex faucibus sollicitudin.</p>
+  </div>
+    
+    <div class="buttons-container buttons">
+        <a href="/login" class="button">
+            <span class="button-text">Log In</span>
+        </a>
+        <a href="/register" class="button">
+            <span class="button-text">Register</span>
+        </a>
+    </div>
+
+    <script>
+        function redirectToMasterProgram(selectedValue) {
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+    </script>
+{% endblock %}

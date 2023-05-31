@@ -1,0 +1,307 @@
+<html>
+<head>
+    <title>Results Template</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .title {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .choice {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .choice label {
+            font-weight: bold;
+        }
+
+        .tables {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .table {
+            margin: 0 20px;
+            width: 200px;
+        }
+
+        .table h3 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="title">
+    <h1>Results Template</h1>
+</div>
+<div class="tables">
+    <div class="table">
+        <h3>MA1</h3>
+        <table id="ma1Table">
+            <p>Number of Courses: <span id="ma1Count"></span></p>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- MA1 table content will be generated dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h3>MA2</h3>
+        <table id="ma2Table">
+            <p>Number of Courses: <span id="ma2Count"></span></p>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- MA2 table content will be generated dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h3>MA3</h3>
+        <table id="ma3Table">
+            <p>Number of Courses: <span id="ma3Count"></span></p>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- MA3 table content will be generated dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h3>MA4</h3>
+            <table id="ma4Table">
+                <p>Number of Courses: <span id="ma4Count"></span></p>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- MA4 table content will be generated dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="#" class="button" onclick="downloadTablesAsPDF()">Download as PDF</a>
+    </div>
+    <div class="button-container">
+        <a href="#" class="button" onclick="checkcount()">Save</button>
+    </div>
+    <div>
+        Counter: <span id="counter">0</span>
+    </div>
+
+    <script>
+        // Retrieve the selected courses from session storage
+        var ma1Courses = JSON.parse(sessionStorage.getItem("selectedCourses1"));
+        var ma2Courses = JSON.parse(sessionStorage.getItem("selectedCourses2"));
+        var ma3Courses = JSON.parse(sessionStorage.getItem("selectedCourses3"));
+        var ma4Courses = JSON.parse(sessionStorage.getItem("selectedCourses4"));
+        var counter = 0;
+        var ma1Count = 0;
+        var ma2Count = 0;
+        var ma3Count = 0;
+        var ma4Count = 0;
+
+        // Function to update the course count
+        function updateCourseCount(courses, countId) {
+        var countElement = document.getElementById(countId);
+        if (courses) {
+            countElement.textContent = courses.length;
+        } else {
+            countElement.textContent = '0';
+        }
+        }
+
+        // Update course count for each MA level
+        updateCourseCount(ma1Courses, 'ma1Count');
+        updateCourseCount(ma2Courses, 'ma2Count');
+        updateCourseCount(ma3Courses, 'ma3Count');
+        updateCourseCount(ma4Courses, 'ma4Count');
+
+
+        // Function to generate table rows for a given course array
+function generateTableRows(courses, tableId, countId) {
+    var table = document.getElementById(tableId);
+    var count = document.getElementById(countId);
+
+    // Clear existing rows
+    table.innerHTML = "";
+
+    // Create the table header row
+    var thead = document.createElement("thead");
+    var headerRow = thead.insertRow();
+    var courseNameHeader = document.createElement("th");
+    var creditsHeader = document.createElement("th");
+    courseNameHeader.textContent = "Course Name";
+    creditsHeader.textContent = "Credits";
+    headerRow.appendChild(courseNameHeader);
+    headerRow.appendChild(creditsHeader);
+    table.appendChild(thead);
+
+    // Create the table body
+    var tbody = document.createElement("tbody");
+
+    // Generate table rows for each course
+    courses.forEach(function (course) {
+        var row = tbody.insertRow();
+        var nameCell = row.insertCell(0);
+        var creditsCell = row.insertCell(1);
+        nameCell.textContent = course.name;
+        creditsCell.textContent = course.credits;
+    });
+
+    table.appendChild(tbody);
+
+    // Update the count
+    count.textContent = courses.length;
+}
+
+        // Generate tables for each MA level
+        if (ma1Courses) {
+            generateTableRows(ma1Courses, "ma1Table", "ma1Count");
+        }
+
+        if (ma2Courses) {
+            generateTableRows(ma2Courses, "ma2Table", "ma2Count");
+        }
+
+        if (ma3Courses) {
+            generateTableRows(ma3Courses, "ma3Table", "ma3Count");
+        }
+
+        if (ma4Courses) {
+            generateTableRows(ma4Courses, "ma4Table", "ma4Count");
+        }
+
+        var counter = 0;
+
+        function downloadTablesAsPDF() {
+    var ma1Courses = JSON.parse(sessionStorage.getItem("selectedCourses1"));
+    var ma2Courses = JSON.parse(sessionStorage.getItem("selectedCourses2"));
+    var ma3Courses = JSON.parse(sessionStorage.getItem("selectedCourses3"));
+    var ma4Courses = JSON.parse(sessionStorage.getItem("selectedCourses4"));
+
+    // Create an empty PDF document
+    var doc = new jsPDF();
+
+    // Retrieve the table elements
+    var tables = document.getElementsByClassName("table");
+
+    // Create a cover page with EPFL title
+    doc.setTextColor("#FF0000");
+    doc.setFontSize(40);
+    doc.setFontStyle("bold");
+    doc.text("EPFL", doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: "center" });
+    doc.addPage(); // Add a new page for the tables
+
+        // Loop through each table and add it to the PDF document
+        for (var i = 0; i < tables.length; i++) {
+            var table = tables[i];
+            doc.setTextColor("#000000");
+
+            // Create a new div element for styling the table
+            var div = document.createElement("div");
+            div.innerHTML = table.outerHTML;
+
+            // Apply custom CSS styles to the table
+            div.style.marginBottom = "20px";
+            div.style.border = "1px solid #ccc";
+            div.style.padding = "5px";
+            div.style.backgroundColor = "#f5f5f5";
+            div.style.fontFamily = "Arial, sans-serif";
+
+            // Modify the table layout
+            var styledTable = div.querySelector("table");
+            styledTable.style.borderCollapse = "collapse";
+            styledTable.style.width = "80%";
+
+            // Modify the table cell styles
+            var tableCells = div.querySelectorAll("td, th");
+            for (var j = 0; j < tableCells.length; j++) {
+                var cell = tableCells[j];
+                cell.style.border = "1px solid #ccc";
+                cell.style.padding = "5px";
+                cell.style.color = "#000000"; // Set table text color to black
+            }
+
+            // Get the HTML content of the styled table
+            var tableContent = div.outerHTML;
+
+            // Add the table content as HTML to the PDF document
+            doc.fromHTML(tableContent, 10, 20);
+
+            if (i < tables.length - 1) {
+                doc.addPage(); // Add a new page for the next table
+            }
+        }
+
+    // Save the PDF document
+    doc.save("tables.pdf");
+
+}
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+</body>
+</html>

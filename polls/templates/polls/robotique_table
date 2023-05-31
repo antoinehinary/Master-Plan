@@ -1,0 +1,356 @@
+Robotique table for optional courses :
+<th>
+    <tr>
+        <td>Advanced machine learning</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Advanced MEMS and microsystems</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Advanced satellite positioning</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Aerial robotics</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Analyse de produits et systèmes</td>
+        <td>2</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+    </tr>
+    <tr>
+        <td>Analysis and modeling of locomotion</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Applied and industrial robotics</td>
+        <td>2</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+    </tr>
+    <tr>
+        <td>Commande embarquée de moteurs</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Computational motor control</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Computer vision</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Continuous improvement of manufacturing systems</td>
+        <td>5</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+    </tr>
+    <tr>
+        <td>Controlling behavior in animal and robots</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Deep learning</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Deep learning for autonomous vehicles</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+    <tr>
+        <td>Deep learning for optical imaging</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td></td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Distributed intelligent systems</td>
+        <td>5</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+    </tr>
+    <tr>
+        <td>Embedded systems</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Evolutionary robotics</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Haptic human robot interfaces</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Image analysis and pattern recognition</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Image processing I, II</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+    <tr>
+        <td>Industrial automation</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Intelligent agents</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+    <tr>
+        <td>Interdisciplinary project</td>
+        <td>10</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="10"></td>
+    </tr>
+    <tr>
+        <td>Learning and adaptative control for robots</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Legged robots</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Lifecycle performance of product systems</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Machine learning programming</td>
+        <td>2</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+    </tr>
+    <tr>
+        <td>Mechanical product design and development</td>
+        <td>5</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+    </tr>
+    <tr>
+        <td>Micro-nano robotics</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Multivariable control and coordination systems</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Networked control systems</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Neural interfaces</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+    <tr>
+        <td>Neural signal and signal processing</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+    <tr>
+        <td>Numerical methods in biomechanics</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Optimal decision making</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Organic and printed electronics</td>
+        <td>2</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="2"></td>
+    </tr>
+    <tr>
+        <td>Production management</td>
+        <td>5</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+    </tr>
+    <tr>
+        <td>Real-time embedded systems</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Sensor orientation</td>
+        <td>4</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="4"></td>
+    </tr>
+    <tr>
+        <td>Sensors in medical instrumentation</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>System identification</td>
+        <td>3</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="3"></td>
+    </tr>
+    <tr>
+        <td>Systèmes mécatroniques</td>
+        <td>5</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>A, B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="5"></td>
+    </tr>
+    <tr>
+        <td>Translational neuroengineering</td>
+        <td>6</td>
+        <td>Oral Exam</td>
+        <td>Summer/Spring</td>
+        <td>B, C</td>
+        <td><input type="checkbox" onclick="updateCredits(this)" data-credits="6"></td>
+    </tr>
+</th>
+
