@@ -4,7 +4,7 @@
     <style>
         /* Add your custom styles here */
         body {
-            font-family: Arial, sans-serif;
+            font-family: Calibri, sans-serif;
         }
 
         .title {
@@ -73,6 +73,12 @@
         .button:hover {
             background-color: #ddd;
         }
+        #myChart {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -144,12 +150,7 @@
     <div class="button-container">
         <a href="#" class="button" onclick="downloadTablesAsPDF()">Download as PDF</a>
     </div>
-    <div class="button-container">
-        <a href="#" class="button" onclick="checkcount()">Save</button>
-    </div>
-    <div>
-        Counter: <span id="counter">0</span>
-    </div>
+
 
     <script>
         // Retrieve the selected courses from session storage
@@ -181,127 +182,212 @@
 
 
         // Function to generate table rows for a given course array
-function generateTableRows(courses, tableId, countId) {
-    var table = document.getElementById(tableId);
-    var count = document.getElementById(countId);
+        function generateTableRows(courses, tableId, countId) {
+            var table = document.getElementById(tableId);
+            var count = document.getElementById(countId);
 
-    // Clear existing rows
-    table.innerHTML = "";
+            // Clear existing rows
+            table.innerHTML = "";
 
-    // Create the table header row
-    var thead = document.createElement("thead");
-    var headerRow = thead.insertRow();
-    var courseNameHeader = document.createElement("th");
-    var creditsHeader = document.createElement("th");
-    courseNameHeader.textContent = "Course Name";
-    creditsHeader.textContent = "Credits";
-    headerRow.appendChild(courseNameHeader);
-    headerRow.appendChild(creditsHeader);
-    table.appendChild(thead);
+            // Create the table header row
+            var thead = document.createElement("thead");
+            var headerRow = thead.insertRow();
+            var courseNameHeader = document.createElement("th");
+            var creditsHeader = document.createElement("th");
+            courseNameHeader.textContent = "Course Name";
+            creditsHeader.textContent = "Credits";
+            headerRow.appendChild(courseNameHeader);
+            headerRow.appendChild(creditsHeader);
+            table.appendChild(thead);
 
-    // Create the table body
-    var tbody = document.createElement("tbody");
+            // Create the table body
+            var tbody = document.createElement("tbody");
 
-    // Generate table rows for each course
-    courses.forEach(function (course) {
-        var row = tbody.insertRow();
-        var nameCell = row.insertCell(0);
-        var creditsCell = row.insertCell(1);
-        nameCell.textContent = course.name;
-        creditsCell.textContent = course.credits;
-    });
+            // Generate table rows for each course
+            courses.forEach(function (course) {
+                var row = tbody.insertRow();
+                var nameCell = row.insertCell(0);
+                var creditsCell = row.insertCell(1);
+                nameCell.textContent = course.name;
+                creditsCell.textContent = course.credits;
+            });
 
-    table.appendChild(tbody);
+            table.appendChild(tbody);
 
-    // Update the count
-    count.textContent = courses.length;
+            // Update the count
+            count.textContent = courses.length;
+        }
+
+    // Generate tables for each MA level
+    if (ma1Courses) {
+        generateTableRows(ma1Courses, "ma1Table", "ma1Count");
+    }
+
+    if (ma2Courses) {
+        generateTableRows(ma2Courses, "ma2Table", "ma2Count");
+    }
+
+    if (ma3Courses) {
+        generateTableRows(ma3Courses, "ma3Table", "ma3Count");
+    }
+
+    if (ma4Courses) {
+        generateTableRows(ma4Courses, "ma4Table", "ma4Count");
+    }
+
+
+
+    function downloadTablesAsPDF() {
+  var ma1Courses = JSON.parse(sessionStorage.getItem("selectedCourses1"));
+  var ma2Courses = JSON.parse(sessionStorage.getItem("selectedCourses2"));
+  var ma3Courses = JSON.parse(sessionStorage.getItem("selectedCourses3"));
+  var ma4Courses = JSON.parse(sessionStorage.getItem("selectedCourses4"));
+
+  // Create an empty PDF document
+  var doc = new jsPDF();
+
+  // Set font styles
+  doc.setFont("Arial", "normal");
+
+  // Create a cover page with EPFL title and program name
+  doc.setTextColor("#FF0000");
+  doc.setFontSize(40);
+  doc.setFontStyle("bold");
+  doc.text("EPFL", doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: "center" });
+  doc.addPage(); // Add a new page for the course list
+
+  // Set copyright footer
+  var footerText = "© 2023 MasterPlan. All rights reserved.";
+  doc.setFont("Calibri", "normal");
+
+  // Print MA1 courses
+  doc.addPage();
+  doc.setFontSize(20);
+  doc.setTextColor("#000000");
+  doc.setFontStyle("bold");
+  doc.text("MA1 - Total Credits: " + getTotalCredits(ma1Courses), 10, 20);
+  doc.setTextColor("#000000");
+  doc.setFontSize(12);
+  printCourseList(doc, ma1Courses, 10, 30);
+  doc.setTextColor("#666666");
+  doc.setFontSize(10);
+  doc.text(footerText, 10, doc.internal.pageSize.getHeight() - 10, { align: "left" });
+
+  // Print MA2 courses
+  doc.addPage();
+  doc.setFontSize(20);
+  doc.setTextColor("#000000");
+  doc.setFontStyle("bold");
+  doc.text("MA2 - Total Credits: " + getTotalCredits(ma2Courses), 10, 20);
+  doc.setTextColor("#000000");
+  doc.setFontSize(12);
+  printCourseList(doc, ma2Courses, 10, 30);
+  doc.setTextColor("#666666");
+  doc.setFontSize(10);
+  doc.text(footerText, 10, doc.internal.pageSize.getHeight() - 10, { align: "left" });
+
+  // Print MA3 courses
+  doc.addPage();
+  doc.setFontSize(20);
+  doc.setTextColor("#000000");
+  doc.setFontStyle("bold");
+  doc.text("MA3 - Total Credits: " + getTotalCredits(ma3Courses), 10, 20);
+  doc.setTextColor("#000000");
+  doc.setFontSize(12);
+  printCourseList(doc, ma3Courses, 10, 30);
+  doc.setTextColor("#666666");
+  doc.setFontSize(10);
+  doc.text(footerText, 10, doc.internal.pageSize.getHeight() - 10, { align: "left" });
+
+  // Print MA4 courses
+  doc.addPage();
+  doc.setFontSize(20);
+  doc.setTextColor("#000000");
+  doc.setFontStyle("bold");
+  doc.text("MA4 - Total Credits: " + getTotalCredits(ma4Courses), 10, 20);
+  doc.setTextColor("#000000");
+  doc.setFontSize(12);
+  printCourseList(doc, ma4Courses, 10, 30);
+  doc.setTextColor("#666666");
+  doc.setFontSize(10);
+  doc.text(footerText, 10, doc.internal.pageSize.getHeight() - 10, { align: "left" });
+
+  doc.addPage();
+  doc.setTextColor("#000000");
+  doc.setFontSize(12);
+  doc.text("Wishing you luck!", 10, 180);
+  doc.setTextColor("#666666");
+  doc.setFontSize(10);
+  doc.text(footerText, 10, doc.internal.pageSize.getHeight() - 10, { align: "left" });
+
+  // Save the PDF document
+  doc.save("courses.pdf");
 }
 
-        // Generate tables for each MA level
-        if (ma1Courses) {
-            generateTableRows(ma1Courses, "ma1Table", "ma1Count");
-        }
 
-        if (ma2Courses) {
-            generateTableRows(ma2Courses, "ma2Table", "ma2Count");
-        }
-
-        if (ma3Courses) {
-            generateTableRows(ma3Courses, "ma3Table", "ma3Count");
-        }
-
-        if (ma4Courses) {
-            generateTableRows(ma4Courses, "ma4Table", "ma4Count");
-        }
-
-        var counter = 0;
-
-        function downloadTablesAsPDF() {
-    var ma1Courses = JSON.parse(sessionStorage.getItem("selectedCourses1"));
-    var ma2Courses = JSON.parse(sessionStorage.getItem("selectedCourses2"));
-    var ma3Courses = JSON.parse(sessionStorage.getItem("selectedCourses3"));
-    var ma4Courses = JSON.parse(sessionStorage.getItem("selectedCourses4"));
-
-    // Create an empty PDF document
-    var doc = new jsPDF();
-
-    // Retrieve the table elements
-    var tables = document.getElementsByClassName("table");
-
-    // Create a cover page with EPFL title
-    doc.setTextColor("#FF0000");
-    doc.setFontSize(40);
-    doc.setFontStyle("bold");
-    doc.text("EPFL", doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: "center" });
-    doc.addPage(); // Add a new page for the tables
-
-        // Loop through each table and add it to the PDF document
-        for (var i = 0; i < tables.length; i++) {
-            var table = tables[i];
-            doc.setTextColor("#000000");
-
-            // Create a new div element for styling the table
-            var div = document.createElement("div");
-            div.innerHTML = table.outerHTML;
-
-            // Apply custom CSS styles to the table
-            div.style.marginBottom = "20px";
-            div.style.border = "1px solid #ccc";
-            div.style.padding = "5px";
-            div.style.backgroundColor = "#f5f5f5";
-            div.style.fontFamily = "Arial, sans-serif";
-
-            // Modify the table layout
-            var styledTable = div.querySelector("table");
-            styledTable.style.borderCollapse = "collapse";
-            styledTable.style.width = "80%";
-
-            // Modify the table cell styles
-            var tableCells = div.querySelectorAll("td, th");
-            for (var j = 0; j < tableCells.length; j++) {
-                var cell = tableCells[j];
-                cell.style.border = "1px solid #ccc";
-                cell.style.padding = "5px";
-                cell.style.color = "#000000"; // Set table text color to black
-            }
-
-            // Get the HTML content of the styled table
-            var tableContent = div.outerHTML;
-
-            // Add the table content as HTML to the PDF document
-            doc.fromHTML(tableContent, 10, 20);
-
-            if (i < tables.length - 1) {
-                doc.addPage(); // Add a new page for the next table
-            }
-        }
-
-    // Save the PDF document
-    doc.save("tables.pdf");
-
+// Utility function to generate a course list string
+function printCourseList(doc, courses, x, y) {
+    var lineHeight = 8; // Adjust this value to increase/decrease the line height
+    for (var i = 0; i < courses.length; i++) {
+        var course = courses[i];
+        var credits = course.credits.toString();
+        var creditsPadding = " ".repeat(3 - credits.length); // Adjust the padding based on the number of digits in credits
+        doc.text(course.name, x, y + (lineHeight * i));
+        doc.text(credits + " credits", x + 100, y + (lineHeight * i));
+    }
 }
 
-    </script>
+// Utility function to calculate the total credits for a given set of courses
+function getTotalCredits(courses) {
+    var totalCredits = 0;
+    for (var i = 0; i < courses.length; i++) {
+        var course = courses[i];
+        totalCredits += course.credits;
+    }
+    return totalCredits;
+}
+ </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+        
+        <canvas id="myChart" style="margin-top: 30px; align-self: center ;" ></canvas>
+      
+        <script>
+          // Chart.js code here
+          var ma1Courses = JSON.parse(sessionStorage.getItem("selectedCourses1"));
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['MA1', 'MA2', 'MA3', 'MA4'],
+              datasets: [{
+                data: [getTotalCredits(ma1Courses), getTotalCredits(ma2Courses), getTotalCredits(ma3Courses), getTotalCredits(ma4Courses)],
+                backgroundColor: [
+                  'rgba(136, 8, 8, 0.2)',
+                  'rgba(238, 75, 43, 0.2)',
+                  'rgba(199, 0, 57 , 0.2)',
+                  'rgba(88, 24, 69, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(136, 8, 8, 1)',
+                  'rgba(238, 75, 43, 1)',
+                  'rgba(199, 0, 57 , 1)',
+                  'rgba(88, 24, 69, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+            },
+          });
+        </script>
 </body>
 </html>
+
+
+
