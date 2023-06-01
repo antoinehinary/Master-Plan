@@ -80,8 +80,8 @@ def masters(request):
 def results(request):
     return render(request, 'polls/results.html')
 
-def timetable(request):
-    return render(request, 'polls/timetable.html')
+def PDF(request):
+    return render(request, 'polls/PDF.html')
 
 def register(request):
     if request.method == 'POST':

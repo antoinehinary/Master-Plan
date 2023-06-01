@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CustomLoginView, CustomLogoutView, LandingView, results, masters, mt, register,download_all_choices, robotics, neuroX, datascience, semesters, timetable
+from .views import CustomLoginView, CustomLogoutView, LandingView, results, masters, mt, register,download_all_choices, robotics, neuroX, datascience, semesters, PDF
 
 app_name = 'polls'
 
@@ -16,5 +16,5 @@ urlpatterns = [
     path('datascience/', datascience, name='datascience'),
     path('semesters/', semesters, name='semesters'),
     path('masters/', masters, name='masters'), 
-    path('timetable/', timetable, name='timetable'), 
+    path('PDF/', PDF, name='PDF'), 
 ]
